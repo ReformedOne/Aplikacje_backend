@@ -1,0 +1,106 @@
+package com.example.roomsservice;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Builder
+@Data
+@AllArgsConstructor
+@Entity
+@NoArgsConstructor
+public class Room {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    private Long roomNumber;
+    private Boolean isReserved;
+    private Boolean isOccupied;
+
+    public Room(Room room) {
+        this.id = room.id;
+        this.roomNumber = room.roomNumber;
+        this.isReserved = room.isReserved;
+        this.isOccupied = room.isOccupied;
+    }
+}
+
+
+
+
+
+RoomDTO
+package com.example.roomsservice;
+
+public class RoomDTO {
+    private long roomNumber;
+    private boolean isReserved;
+    private boolean isOccupied;
+
+    public RoomDTO() {
+    }
+
+    public Long getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Long roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public Boolean getReserved() {
+        return isReserved;
+    }
+
+    public void setReserved(Boolean reserved) {
+        isReserved = reserved;
+    }
+
+    public Boolean getOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(Boolean occupied) {
+        isOccupied = occupied;
+    }
+}
+
+
+
+RoomsController
+
+package com.example.roomsservice;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/rooms")
+public class RoomsController {
+
+    private final RoomsService service;
+
+
+    public RoomsController(RoomsService service) {
+        this.service = service;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllRooms() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllRooms());
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addRoom(@RequestBody RoomDTO roomDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.addRoom(roomDTO));
+    }
+}
+
+
