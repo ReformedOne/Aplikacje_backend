@@ -34,7 +34,7 @@ public class Room {
 
 
 
-RoomDTO
+---------------------------------------------------------------------------------------RoomDTO
 package com.example.roomsservice;
 
 public class RoomDTO {
@@ -72,7 +72,7 @@ public class RoomDTO {
 
 
 
-RoomsController
+--------------------------------------------------------------------------------------RoomsController
 
 package com.example.roomsservice;
 
